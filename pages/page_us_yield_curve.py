@@ -6,6 +6,7 @@ from dash_bootstrap_templates import load_figure_template
 
 from utils import data_source as ds
 from utils import yield_curve_plots as ycp
+from utils.styles import CONTENT_STYLE
 
 dash.register_page(__name__, path='/', name='US Treasuries Yield Curve')
 
@@ -23,8 +24,7 @@ layout = dbc.Container([dbc.Row(as_of_date_component, class_name='mb-4'),
                         dbc.Row([
                             dbc.Col(dcc.Graph(id="US", figure=ycp.plot_yield_curve_surface(df,
                                                                                            source_text=source)),
-                                    xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-5'),
-
+                                    xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-6'),
                             dbc.Col(
                                 dcc.Graph(figure=ycp.plot_heatmap(df, source_text=source)),
                                 xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'
@@ -36,11 +36,13 @@ layout = dbc.Container([dbc.Row(as_of_date_component, class_name='mb-4'),
                                 dcc.Graph(id='graph', figure=ycp.plot_historical_yield_curve(df, source_text=source)),
                                 xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'),
                             dbc.Col(
-                                dcc.Graph(figure=ycp.plot_line_spread(df, source_text=source)),
+                                dcc.Graph(figure=ycp.plot_line_spread(df, idx='DATE', low='2-year', high='10-year',
+                                                                      source_text=source)),
                                 xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4')
                         ]),
 
                         ],
                        fluid=True,
+                       style=CONTENT_STYLE,
                        class_name="dbc"
                        )

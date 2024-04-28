@@ -11,8 +11,9 @@ def get_us_yield_curve_data():
     start = '1990-01-01'
     tickers = ['GS30', 'GS10', 'GS5', 'GS3', 'GS2', 'GS1', 'GS6m', 'GS3m', 'GS1m']
     df = pdr.get_data_fred(tickers, start)
-    df.columns = ['30Y', '10Y', '5Y', '3Y', '2Y', '1Y', '6M', '3M', '1M']
-    df.columns = [30, 10, 5, 3, 2, 1, 0.5, 0.25, 0.083]
+    # df.columns = ['30Y', '10Y', '5Y', '3Y', '2Y', '1Y', '6M', '3M', '1M']
+    df.columns = ['30-year', '10-year', '5-year', '3-year', '2-year', '1-year', '6-month', '3-month', '1-month']
+    # df.columns = [30, 10, 5, 3, 2, 1, 0.5, 0.25, 0.083]
     # Changing format from 1st day of the month to last day of the month
     df.index = df.index + pd.offsets.MonthEnd(0)
     as_of_date = df.index[-1]
@@ -43,8 +44,8 @@ def get_uk_yield_curve_data():
     #  '3.5Y', '3Y', '2.5Y', '2Y', '1.5Y', '1Y', '0.5Y']
     df = pd.read_csv('data/data_boe_yc.csv', index_col=0)
     df.index = pd.to_datetime(df.index)
-    df = df[['30Y', '10Y', '5Y', '4Y', '3Y', '2Y', '1Y', '6M']]
-    df.columns = [30, 10, 5, 4, 3, 2, 1, 0.5]
+    # df = df[['30Y', '10Y', '5Y', '4Y', '3Y', '2Y', '1Y', '6M']]
+    # df.columns = [30, 10, 5, 4, 3, 2, 1, 0.5]
 
     return df
 

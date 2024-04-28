@@ -6,12 +6,13 @@ from dash_bootstrap_templates import load_figure_template
 
 from utils import data_source as ds
 from utils import yield_curve_plots as ycp
-
+from utils.styles import CONTENT_STYLE
 dash.register_page(__name__, name='UK BoE Yield Curve')
 
-source = "Bank of England"
+source = "Data Source: Bank of England"
 uk_df = ds.get_uk_yield_curve_data()
 as_of_date = uk_df.index[-1].strftime("%b-%Y")
+
 
 # load_figure_template("lux")
 
@@ -31,15 +32,16 @@ layout = dbc.Container([dbc.Row(as_of_date_component, class_name='mb-4'),
                         dbc.Row([
                             dbc.Col(
                                 dcc.Graph(id='graph', figure=ycp.plot_historical_yield_curve(uk_df, source_text=source,
-                                                                                             id_vars='years:')),
+                                                                                             id_vars='Date')),
                                 xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'),
                             dbc.Col(
-                                dcc.Graph(figure=ycp.plot_line_spread(uk_df, source_text=source, idx='years:', low=1,
-                                                                      high=10)),
+                                dcc.Graph(figure=ycp.plot_line_spread(uk_df, source_text=source, idx='Date', low='2Y',
+                                                                      high='10Y')),
                                 xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4')
                         ]),
 
                         ],
                        fluid=True,
+                       style=CONTENT_STYLE,
                        class_name="dbc"
                        )
