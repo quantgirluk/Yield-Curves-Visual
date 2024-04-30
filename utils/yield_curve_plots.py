@@ -6,53 +6,80 @@ import numpy as np
 
 def plot_yield_curve_surface(df, source_text):
     radius = 1.95
-    fig = go.Figure(data=[go.Surface(x=df.columns,
-                                     y=df.index,
-                                     z=df.values,
-                                     contours={
-                                         "x": {"show": True, "color": "lightblue", "size": 0.02},
-                                     },
-                                     # opacity=0.99,
-                                     connectgaps=False,
-                                     colorscale='ice',
-                                     showscale=False,
-                                     reversescale=True)
-                          ]
-                    )
-
-    fig.update_layout(
-        # title='Historical Yield Curve',
-        # title_font=dict(size=20),
-        autosize=True,
-        # width=1800,
-        height=1000,
-        hovermode='closest',
-        scene={'aspectratio': {"x": 1, "y": 1.5, "z": 0.7},
-               'camera': {'up': {'x': 0, 'y': 0, 'z': 1.0},
-                          'eye': {'x': 1.0 * radius, 'y': 0.5 * radius, 'z': 0.25 * radius},
-                          'center': {'x': 0.0, 'y': 0.0, 'z': 0.0},
-                          },
-               'xaxis': {'zeroline': False, "showspikes": False},
-               'yaxis': {'zeroline': False, "showspikes": False},
-               'zaxis': {"showspikes": False},
-               'xaxis_title': '',
-               'yaxis_title': '',
-               'zaxis_title': ''
-               },
-        margin=dict(l=10, r=20, b=20, t=10),
-        annotations=[
-            dict(
-                text=source_text,
-                x=0.0,
-                y=0.0,
-                align="right",
-                xref="paper",
-                yref="paper",
-                showarrow=False
-            )
-        ]
+    first_tenor = df.columns[-1]
+    fig = go.Figure(data=[
+        go.Surface(x=df.columns,
+                   y=df.index,
+                   z=df.values,
+                   contours={"x": {"show": True, "color": "lightblue", "size": 0.01,
+                                   "project": {"x": False, "y": False, "z": False}},
+                             "y": {"show": False, "highlight": True},
+                             "z": {"show": False, "highlight": False}},
+                   # opacity=0.99,
+                   connectgaps=False,
+                   colorscale='ice',
+                   # colorscale=[[1, 'rgb(230, 238, 255)'], [0, 'rgb(0, 32, 102)']],
+                   cmin=-2,
+                   # cmax=11,
+                   showscale=False,
+                   reversescale=True,
+                    hovertemplate='Maturity: %{x}' +\
+                                  '<br>Date: %{y}' +\
+                                  '<br>Yield: %{z:.2f}<extra></extra>',
+                    # text = [title for title in df.Title],
+                   ),
+    ]
     )
-    # fig.update_scenes(xaxis_showspikes=False, yaxis_showspikes=False, zaxis_showspikes=False)
+
+
+    fig.update_layout(title='Historical Yield Curve',
+                      title_font=dict(size=20),
+                      autosize=True,
+                      # width=1800,
+                      height=900,
+                      hovermode='closest',
+                      scene={
+                          'aspectratio': {"x": 1, "y": 1.75, "z": 0.75},
+                          'camera': {
+                              'up': {'x': 0, 'y': 0, 'z': 1.0},
+                              'eye': {'x': 1.0 * radius, 'y': 0.5 * radius, 'z': 0.35 * radius},
+                              'center': {'x': 0., 'y': 0., 'z': -0.1},
+                          },
+                          'xaxis': {'zeroline': False, "showspikes": False, "showline": False},
+                          'yaxis': {'zeroline': False, "showspikes": False, "showline": False},
+                          'zaxis': {"showspikes": False},
+                          'xaxis_title': '',
+                          'yaxis_title': '',
+                          'zaxis_title': ''
+                      },
+                      margin=dict(l=40, r=40, b=40, t=40),
+                      annotations=[
+                          dict(
+                              text=source_text,
+                              x=0.0,
+                              y=0.0,
+                              align="right",
+                              xref="paper",
+                              yref="paper",
+                              showarrow=False
+                          )
+                      ]
+                      )
+
+    # fig.add_scatter3d(x=[first_tenor],
+    #                   y=df.index,
+    #                   z=df[[first_tenor]].values,
+    #                   mode='markers',
+    #                   line=dict(
+    #                       color='red',
+    #                       width=2
+    #                   ),
+    #                   marker=dict(
+    #                       size=2,
+    #                       color=df[[first_tenor]].values,
+    #                       colorscale='Viridis',
+    #                   ),
+    #                   )
     # fig.show(config={'modeBarButtonsToRemove': ['zoom', 'pan']})
     return fig
 
@@ -64,8 +91,12 @@ def plot_heatmap(df, source_text):
                                      x=data.columns,
                                      y=data.index,
                                      colorscale='ice',
+                                     zmin=-2,
                                      showscale=True,
                                      reversescale=True,
+                                     hovertemplate='Maturity: %{y}' + \
+                                                   '<br>Date: %{x}' + \
+                                                   '<br>Yield: %{z:.2f}<extra></extra>',
                                      )])
 
     fig.update_xaxes(title=None)
@@ -119,7 +150,7 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                       title_font=dict(size=20),
                       autosize=True,
                       # width=100,
-                      height=800,
+                      height=600,
                       # annotations=[
                       #     dict(
                       #         text=source_text,
