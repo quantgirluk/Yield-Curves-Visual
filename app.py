@@ -15,7 +15,7 @@ dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates@V1.0.2
 app = dash.Dash(__name__,
                 external_stylesheets=[dbc.themes.SPACELAB, dbc_css],
                 meta_tags=[{'name': 'viewport',
-                            'content': 'width=device-width,initial-scale=0.9'}],
+                            'content': 'width=device-width,initial-scale=0.8'}],
                 use_pages=True,
                 )
 # server = app.server
