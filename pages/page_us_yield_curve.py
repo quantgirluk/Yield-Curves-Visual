@@ -19,32 +19,42 @@ load_figure_template("lux")
 as_of_date_component = html.Em(children=f'Data as of {as_of_date}',
                                className='text-center')
 
+layout = dbc.Container([
 
-layout = dbc.Container([dbc.Row(as_of_date_component,
-                                class_name='mt-4'
-                                ),
-                        dbc.Row([
-                            dbc.Col(dcc.Graph(id="US", figure=ycp.plot_yield_curve_surface(df,
-                                                                                           source_text=source)),
-                                    xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'),
-                            dbc.Col(
-                                dcc.Graph(figure=ycp.plot_heatmap(df, source_text=source)),
-                                xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'
-                            )
-                        ]),
+    # dbc.Row(as_of_date_component,
+    #         class_name='mt-4'
+    #         ),
 
-                        dbc.Row([
-                            dbc.Col(
-                                dcc.Graph(id='graph', figure=ycp.plot_historical_yield_curve(df, source_text=source)),
-                                xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'),
-                            dbc.Col(
-                                dcc.Graph(figure=ycp.plot_line_spread(df, idx='DATE', low='2-year', high='10-year',
-                                                                      source_text=source)),
-                                xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4')
-                        ]),
+    dbc.Row([
+        dbc.Col(dcc.Graph(id="US", figure=ycp.plot_yield_curve_surface(df,
+                                                                       source_text=source)),
+                xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'),
+        dbc.Col(
+            dcc.Graph(figure=ycp.plot_heatmap(df, source_text=source)),
+            xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'
+        )
+    ]),
 
-                        ],
-                       fluid=True,
-                       style=CONTENT_STYLE,
-                       class_name="dbc"
-                       )
+    html.Br(),
+
+    dbc.Row([
+        dbc.Col(
+            dcc.Graph(id='graph', figure=ycp.plot_historical_yield_curve(df, source_text=source)),
+            xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'),
+    ]),
+
+    html.Br(),
+
+    dbc.Row([
+        dbc.Col(
+            dcc.Graph(figure=ycp.plot_line_spread(df, idx='DATE', low='2-year', high='10-year',
+                                                  source_text=source)),
+            xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4')
+    ]),
+
+],
+
+    fluid=True,
+    style=CONTENT_STYLE,
+    class_name="dbc"
+)

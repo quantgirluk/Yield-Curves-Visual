@@ -20,30 +20,34 @@ as_of_date_component = html.Em(children=f'Data as of {as_of_date}', className='t
 layout = dbc.Container(
     [
 
-        dbc.Row(as_of_date_component, class_name='mt-4'),
+        # dbc.Row(as_of_date_component, class_name='mt-4'),
 
-        dbc.Row([dbc.Col(dcc.Graph(id="UK", figure=ycp.plot_yield_curve_surface(uk_df, source_text=source)),
+        dbc.Row([dbc.Col(dcc.Graph(id="UK", figure=ycp.plot_yield_curve_surface(uk_df, source_text=source, us=False)),
                          xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-5'),
 
                  dbc.Col(dcc.Graph(figure=ycp.plot_heatmap(uk_df, source_text=source)),
                          xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4')
                  ]),
 
-html.Div(
-        dbc.Row(
-            [dbc.Col(
+        html.Br(),
 
-                dcc.Graph(id='graph',
-                          figure=ycp.plot_historical_yield_curve(uk_df, source_text=source,
-                                                                 id_vars='Date'))),
+        html.Div(
+            dbc.Row(
+                [dbc.Col(
 
+                    dcc.Graph(id='graph',
+                              figure=ycp.plot_historical_yield_curve(uk_df, source_text=source,
+                                                                     id_vars='Date'))),
+
+                    # align="center",
+                    # xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'
+
+                ],
                 # align="center",
-                # xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'
+                justify='center'
+            )),
 
-            ],
-            # align="center",
-            justify='center'
-        )),
+        html.Br(),
 
         dbc.Row(
 
@@ -51,7 +55,7 @@ html.Div(
                 dcc.Graph(figure=ycp.plot_line_spread(uk_df, source_text=source, idx='Date', low='2Y', high='10Y')),
 
                 xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-4'),
-align="center",
+            align="center",
         ),
 
     ],
