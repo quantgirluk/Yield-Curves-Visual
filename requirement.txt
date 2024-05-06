@@ -4,4 +4,4 @@ numpy
 pandas
 pandas_datareader
 plotly
-
+gunicorn
