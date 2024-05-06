@@ -35,7 +35,7 @@ modal_overlay = dbc.Modal(
 )
 
 button_howto = dbc.Button(
-    "Learn more",
+    "Learn More",
     id="howto-open",
     outline=True,
     color="info",
@@ -44,10 +44,10 @@ button_howto = dbc.Button(
 )
 
 button_github = dbc.Button(
-    "View Code on github",
+    "GitHub Repository",
     outline=True,
     color="primary",
-    href="https://github.com/quantgirluk",
+    href="https://github.com/quantgirluk/Yield-Curves-Visual",
     id="gh-link",
     style={"text-transform": "none"},
 )
@@ -71,13 +71,12 @@ header = dbc.Navbar(
                             html.Div(
                                 [
                                     html.H4("Yield Curves Visualisation"),
-                                    html.P("By Dialid Santiago"),
+                                    html.P(dcc.Markdown("By [Dialid Santiago](https://quantgirl.blog)"))
                                 ],
                                 id="app-title",
                             )
                         ],
                         md="auto",
-                        #                         md=True,
                         align="center",
                     ),
                 ],
@@ -255,7 +254,7 @@ app.layout = html.Div(children=[
     dbc.Container(
         dbc.Row([html.Div(id='text-container1',
                           children=[dcc.Markdown('''
-              If you like this project, please give it a star in [GitHub](https://github.com/quantgirluk/Understanding-Quantitative-Finance) ⭐️
+              If you like this project, please give it a star in [GitHub](https://github.com/quantgirluk/Yield-Curves-Visual) ⭐️
               ''')
                                     ],
                           className='text-center mt-4', style={'fontSize': 15})
@@ -273,7 +272,7 @@ app.layout = html.Div(children=[
                                             ---                                                                      
                                             ### About Me
                                             
-                                            Hello, my name is Dialid. I am a Mathematician and a Finance Quantitative Analyst based in London. I create open source projects and write about financial mathematics, programming, statistics, data visualisation, and related topics.
+                                            Hello, my name is [Dialid](https://quantgirl.blog/about-me/). I am a Mathematician and a Finance Quantitative Analyst based in London. I create open source projects and write about financial mathematics, programming, statistics, data visualisation, and related topics.
                                             
                                             I have over 8 years of experience working as a Quant. Currently, I am working in the Cross-Asset front office quant team at Bank of America. My previous experience includes the development and implementation of mathematical models for Counterparty Credit Risk, Market Risk, and Wholesale Credit Risk, as well as Validation in Retail Credit Risk. 
                                             
@@ -306,9 +305,6 @@ app.layout = html.Div(children=[
 ])
 
 
-# app.layout = layout
-
-
 # Callback for modal popup
 @app.callback(
     Output("modal", "is_open"),
@@ -321,9 +317,10 @@ def toggle_modal(n1, n2, is_open):
     return is_open
 
 
-####################################
-# RUN the app
-####################################
+
 if __name__ == '__main__':
     server = app.server
-app.run_server(debug=True,  host='0.0.0.0', port=10000)
+app.run_server(debug=True,
+               # host='0.0.0.0',
+               # port=10000
+               )
