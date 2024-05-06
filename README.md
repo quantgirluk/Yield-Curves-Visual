@@ -8,16 +8,21 @@ open source library [Plotly](https://plotly.com/python/).
 If you like this project, please give it a star  ⭐️
 </p>
 
+---
 
 <p align="center">
 <img src="images/dash-app-image-01.png" alt="App"  style="display:block;float:none;margin-left:auto;margin-right:auto;width:60%">
 </p>
+
+---
+
 
 <p align="center">
 <img src="images/dash-app-image-02.png" alt="App"  style="display:block;float:none;margin-left:auto;margin-right:auto;width:60%">
 </p>
 
 
+---
 
 ## Yield Curve 101
 
