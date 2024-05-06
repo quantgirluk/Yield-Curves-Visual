@@ -1,0 +1,7 @@
+dash==2.16.1
+dash-bootstrap-templates==1.1.2
+numpy
+pandas
+pandas_datareader==0.10.0
+plotly
+
