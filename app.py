@@ -1,6 +1,4 @@
-####################################
-# IMPORTS
-####################################
+
 import pandas as pd
 import datetime
 
@@ -19,7 +17,7 @@ app = dash.Dash(__name__,
                             'content': 'width=device-width,initial-scale=0.8'}],
                 use_pages=True,
                 )
-# server = app.server
+server = app.server
 load_figure_template("lux")
 
 title = html.H1(children="Yield Curves Visualization",
