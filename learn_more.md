@@ -1,8 +1,11 @@
-
-
+### About this App
 
 This dash app contains interactive charts illustrating the risk-free Yield Curve 
-for the US and the UK. The code is available [here](https://github.com/quantgirluk).
+for the US and the UK. It was written in Python using the graphing the
+open source library [Plotly](https://plotly.com/python/). The code is available [Here](https://github.com/quantgirluk/Yield-Curves-Visual).
+
+If you like this project, please give it a star in [GitHub](https://github.com/quantgirluk/Yield-Curves-Visual) ⭐️
+
 
 ### Yiel Curve
 
@@ -23,6 +26,9 @@ which are considered to be risk-free.
 
 ### Visualisations
 
+- The animation illustrates the evolution of the yield curve over time. It allows us to appreciate the different
+shapes that it has taken, and how it compares with the present curve.
+
 - The 3-D surfaces in this app follow the style from this article [A 3-D View of a Chart That Predicts
 The Economic Future: The Yield Curve](https://www.nytimes.com/interactive/2015/03/19/upshot/3d-yield-curve-economic-growth.html) 
 by The New York Times. 
@@ -30,8 +36,7 @@ by The New York Times.
 - The Heatmap shows the yield curve evolution over time in two dimensions. It is worth
 noting that the heatmap provides the same picture as  the 3-D surface when viewed from above. 
 
-- The animation illustrates the evolution of the yield curve over time and allows us to see the different
-shapes that it takes.
+
 
 - Finally, the spread yield shows the difference between long and short term interest rates
 
