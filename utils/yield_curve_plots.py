@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 
-def plot_yield_curve_surface(df, source_text, us=True):
+def plot_yield_curve_surface(df, source_text):
     radius = 1.65
     last_column = df.columns[-1]
     x = [last_column] * len(df.index)
@@ -29,7 +29,6 @@ def plot_yield_curve_surface(df, source_text, us=True):
                    hovertemplate='<br>Date: %{y}' + \
                                  '<br>Maturity: %{x}' + \
                                  '<br>Yield: %{z:.2f}<extra></extra>',
-                   # text = [title for title in df.Title],
                    ),
         # ]
     )
@@ -43,11 +42,6 @@ def plot_yield_curve_surface(df, source_text, us=True):
             color='black',
             width=1.5
         ),
-        # marker=dict(
-        #     size=2,
-        #     color=df.values,
-        #     colorscale='Viridis',
-        # ),
     )
     )
 
@@ -148,7 +142,7 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                   x='Maturity',
                   y='Yield',
                   # custom_data=tabular_df[id_vars],
-                  labels={'Color': '', 'Maturity': 'Maturity', 'Yield': 'Yield' },
+                  labels={'Color': '', 'Maturity': 'Maturity', 'Yield': 'Yield'},
                   color=id_vars,
                   color_discrete_sequence=['cornflowerblue'],
                   # color_discrete_map={dt: 'cornflowerblue' for dt in tabular_df.id_vars},
@@ -230,12 +224,11 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
     #                       )
     #                   ])
 
-
-        # for trace in fig['data']:
-        #     if (not trace['name'] in ['Present']):
-        #         trace['showlegend'] = False
-        # fig.frames[k]['layout'].update(title_text=f'An Animation of The Yield Curve over '
-        #                                           f'Time<br><span style="font-size: 12px;">From 1991 to Today  -as of {date}</span>')
+    # for trace in fig['data']:
+    #     if (not trace['name'] in ['Present']):
+    #         trace['showlegend'] = False
+    # fig.frames[k]['layout'].update(title_text=f'An Animation of The Yield Curve over '
+    #                                           f'Time<br><span style="font-size: 12px;">From 1991 to Today  -as of {date}</span>')
 
     # Auto-play animation
     # plotly.offline.plot(fig, auto_play = True)
@@ -252,7 +245,7 @@ def plot_line_spread(df, idx, low, high, source_text):
     fig = px.area(data.reset_index(),
                   x=idx,
                   y='Spread',
-                  hover_data={'Spread' : True},
+                  hover_data={'Spread': True},
                   )
     fig.add_trace(go.Scatter(x=data.index, y=data['Spread_above'], fill='tozeroy', mode='none'))
     fig.add_trace(go.Scatter(x=data.index, y=data['Spread_below'], fill='tozeroy', mode='none'))

@@ -26,7 +26,6 @@ title = html.H1(children="Yield Curves Visualization",
                 className='text-center mt-4',
                 style={'fontSize': 30})
 
-
 # Modal
 with open("learn_more.md", "r") as f:
     howto_md = f.read()
@@ -82,8 +81,8 @@ header = dbc.Navbar(
                                 id="app-title",
                             )
                         ],
-                          md="auto",
-#                         md=True,
+                        md="auto",
+                        #                         md=True,
                         align="center",
                     ),
                 ],
@@ -119,7 +118,6 @@ header = dbc.Navbar(
     # color="dark",
     sticky="top",
 )
-
 
 # Description
 description = dbc.Col(
@@ -162,7 +160,6 @@ description = dbc.Col(
     md=12,
 )
 
-
 app.layout = html.Div(children=[
 
     header,
@@ -184,24 +181,60 @@ app.layout = html.Div(children=[
     # ),
 
     dbc.Container(
-        dbc.Row([html.Div(id='text-container',
-                          children=[dcc.Markdown('''
+        dbc.Row([html.Div(id='yield-curve-101',
+                          children=[
+                              dcc.Markdown('''            
+                  --- 
+                                                                                                             
+                  **Yield Curve 101**  
+                  
                   The yield curve shows how much it costs the federal 
                   government to borrow money 
                   for a given amount of time, revealing the relationship between long- and short-term 
-                  interest rates. It is, inherently, a forecast for what the economy holds in the 
+                  interest rates. 
+                  
+                  It is, inherently, a forecast for what the economy holds in the 
                   future — how much inflation there will be, for example, and how healthy growth will 
                   be over the years ahead — all embodied in the price of money today, tomorrow and 
-                  many years from now.
-                  ''')
-                                    ],
-                          className='text-justify mt-4 mb-4', style={'fontSize': 15})
+                  many years from now.  
+                  
+                  — *The New York Times (2015)*.
+                  
+                  --- 
+                ''')
+                          ],
+                          className='text-justify mt-4', style={'fontSize': 15})
                  ]),
 
         fluid=True,
-        style=CONTENT_INTRO,
+        style={
+            # "margin-left": "3rem",
+            # "margin-right": "3rem",
+            "width": "70%",
+            # "padding": "2rem 2rem 2rem 2rem",
+        },
         class_name="dbc"
     ),
+
+    # dbc.Container(
+    #     dbc.Row([html.Div(id='text-container',
+    #                       children=[dcc.Markdown('''
+    #               The yield curve shows how much it costs the federal
+    #               government to borrow money
+    #               for a given amount of time, revealing the relationship between long- and short-term
+    #               interest rates. It is, inherently, a forecast for what the economy holds in the
+    #               future — how much inflation there will be, for example, and how healthy growth will
+    #               be over the years ahead — all embodied in the price of money today, tomorrow and
+    #               many years from now.
+    #               ''')
+    #                                 ],
+    #                       className='text-justify mt-4 mb-4', style={'fontSize': 15})
+    #              ]),
+    #
+    #     fluid=True,
+    #     style=CONTENT_INTRO,
+    #     class_name="dbc"
+    # ),
 
     dbc.Row([html.Div(id='button',
                       children=[dbc.Button(page['name'],
@@ -277,6 +310,7 @@ app.layout = html.Div(children=[
     ),
 ])
 
+
 # app.layout = layout
 
 
@@ -290,6 +324,7 @@ def toggle_modal(n1, n2, is_open):
     if n1 or n2:
         return not is_open
     return is_open
+
 
 ####################################
 # RUN the app

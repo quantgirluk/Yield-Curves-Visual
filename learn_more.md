@@ -38,6 +38,13 @@ shapes that it takes.
 ### Data Source
 
 - The data for the US Treasury Yield Curve comes from the [FRED Federal Reserve Economic Data](https://fred.stlouisfed.org). 
+Yields on actively traded non-inflation-indexed issues adjusted to constant maturities. 
+For further information regarding treasury constant maturity data, please refer to 
+the [H.15 Statistical Release notes](https://www.federalreserve.gov/releases/h15/default.htm) and 
+the [Treasury Yield Curve Methodology](https://home.treasury.gov/policy-issues/financing-the-government/interest-rate-statistics/treasury-yield-curve-methodology).
 
 - The data for the UK Yield Curve comes from the [Bank of England](https://www.bankofengland.co.uk/statistics/yield-curves/terminology-and-concepts#:~:text=The%20nominal%20OIS%20yield%20curves,are%20available%20at%20monthly%20intervals.) 
-official website.
+official website. The government liability nominal yield curves are used.  These are derived from UK gilt prices and 
+General Collateral (GC) repo rates. The methodology used to construct the yield curves is described in the 
+Bank of England Quarterly Bulletin article by Anderson and Sleath (1999), and a detailed technical description can be 
+found in their Bank of England Working Paper no.126, 'New estimates of the UK real and nominal yield curves'. 

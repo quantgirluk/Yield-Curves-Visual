@@ -21,8 +21,7 @@ layout = dbc.Container(
     [
 
         # dbc.Row(as_of_date_component, class_name='mt-4'),
-
-        dbc.Row([dbc.Col(dcc.Graph(id="UK", figure=ycp.plot_yield_curve_surface(uk_df, source_text=source, us=False)),
+        dbc.Row([dbc.Col(dcc.Graph(id="UK", figure=ycp.plot_yield_curve_surface(uk_df, source_text=source)),
                          xs=12, sm=12, md=12, lg=12, xl=12, xxl=6, class_name='mt-5'),
 
                  dbc.Col(dcc.Graph(figure=ycp.plot_heatmap(uk_df, source_text=source)),
