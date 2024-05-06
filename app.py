@@ -1,14 +1,11 @@
-
-import pandas as pd
-import datetime
-
 import dash
+import dash_bootstrap_components as dbc
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output, State
-import dash_bootstrap_components as dbc
 from dash_bootstrap_templates import load_figure_template
-from utils.styles import CONTENT_STYLE, CONTENT_INTRO
+
+from utils.styles import CONTENT_INTRO
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates@V1.0.2/dbc.min.css"
 app = dash.Dash(__name__,
