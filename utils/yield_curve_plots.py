@@ -166,6 +166,12 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                       height=600,
                       margin=dict(t=70, b=90, l=20, r=20),
                       legend_title="",
+                      legend=dict(
+                          yanchor="top",
+                          y=0.99,
+                          xanchor="right",
+                          x=0.99
+                      ),
                       annotations=[
                           dict(
                               text=source_text,
