@@ -136,6 +136,7 @@ def plot_heatmap(df, source_text):
 
 def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
     df_rev = df.iloc[:, ::-1]
+
     tabular_df = pd.melt(df_rev.reset_index(), id_vars=id_vars, value_vars=df_rev.columns, var_name='Maturity',
                          value_name='Yield')
     tabular_df['Color'] = ['blue'] * len(tabular_df)
@@ -147,15 +148,22 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                   x='Maturity',
                   y='Yield',
                   # custom_data=tabular_df[id_vars],
-                  color='Color',
-                  color_discrete_map={'blue': 'cornflowerblue'},
+                  labels={'Color': '', 'Maturity': 'Maturity', 'Yield': 'Yield' },
+                  color=id_vars,
+                  color_discrete_sequence=['cornflowerblue'],
+                  # color_discrete_map={dt: 'cornflowerblue' for dt in tabular_df.id_vars},
                   animation_frame=id_vars,
                   animation_group='Maturity',
                   range_y=[int(min_yield), int(max_yield) + 2],
                   markers='*',
-                  hover_data={'Maturity': True, 'Yield': True, id_vars: True, 'Color': False}
+                  hover_data={'Maturity': True, 'Yield': True, id_vars: True, 'Color': False},
                   # text=tabular_df.Yield,
                   )
+
+    latest_curve = df_rev.iloc[-1, :]
+    fig.add_trace(go.Scatter(x=latest_curve.index, y=latest_curve.values,
+                             name="Present",
+                             ))
 
     fig.update_layout(title='An Animation of The Yield Curve over Time <br> '
                             '<span style="font-size: 12px;">From January 1990 to May 2024</span>',
@@ -165,6 +173,7 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                       # width=900,
                       height=600,
                       margin=dict(t=70, b=90, l=20, r=20),
+                      legend_title="",
                       annotations=[
                           dict(
                               text=source_text,
@@ -175,17 +184,21 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                               showarrow=False
                           ),
 
-                          dict(
-                              text='Date: Jan-1990',
-                              x=0.9,
-                              y=0.9,
-                              xref="paper",
-                              yref="paper",
-                              showarrow=False
-                          )
+                          # dict(
+                          #     text='Date: Jan-1990',
+                          #     x=0.9,
+                          #     y=0.9,
+                          #     xref="paper",
+                          #     yref="paper",
+                          #     showarrow=False
+                          # )
                       ]
                       )
-    fig.update_layout(showlegend=False)
+    # fig.update_layout(showlegend=False)
+
+    # for trace in fig['data']:
+    #     if (not trace['name'] in ['Present']):
+    #         trace['showlegend'] = False
 
     for step in fig.layout.sliders[0].steps:
         step["args"][1]["frame"]["redraw"] = True
@@ -194,28 +207,33 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
         button['args'][1]['frame']['redraw'] = True
         button['args'][1]['frame']['duration'] = 200
 
-    for k in range(len(fig.frames)):
-        date = df.index[k].strftime('%b-%Y')
-        # date = df.index[k].strftime('%b-%Y')
-        fig.frames[k]['layout'].update(annotations=[
-                          dict(
-                              text=source_text,
-                              x=0,
-                              y=-0.15,
-                              xref="paper",
-                              yref="paper",
-                              showarrow=False
-                          ),
+    # for k in range(len(fig.frames)):
+    #     date = df.index[k].strftime('%b-%Y')
+    #     # date = df.index[k].strftime('%b-%Y')
+    #     fig.frames[k]['layout'].update(annotations=[
+    #                       dict(
+    #                           text=source_text,
+    #                           x=0,
+    #                           y=-0.15,
+    #                           xref="paper",
+    #                           yref="paper",
+    #                           showarrow=False
+    #                       ),
+    #
+    #                       dict(
+    #                           text=f'Date: {date}',
+    #                           x=0.9,
+    #                           y=0.9,
+    #                           xref="paper",
+    #                           yref="paper",
+    #                           showarrow=False
+    #                       )
+    #                   ])
 
-                          dict(
-                              text=f'Date: {date}',
-                              x=0.9,
-                              y=0.9,
-                              xref="paper",
-                              yref="paper",
-                              showarrow=False
-                          )
-                      ])
+
+        # for trace in fig['data']:
+        #     if (not trace['name'] in ['Present']):
+        #         trace['showlegend'] = False
         # fig.frames[k]['layout'].update(title_text=f'An Animation of The Yield Curve over '
         #                                           f'Time<br><span style="font-size: 12px;">From 1991 to Today  -as of {date}</span>')
 

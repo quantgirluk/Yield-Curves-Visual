@@ -7,7 +7,7 @@ import datetime
 import dash
 from dash import dcc
 from dash import html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 from dash_bootstrap_templates import load_figure_template
 from utils.styles import CONTENT_STYLE, CONTENT_INTRO
@@ -26,8 +26,150 @@ title = html.H1(children="Yield Curves Visualization",
                 className='text-center mt-4',
                 style={'fontSize': 30})
 
+
+# Modal
+with open("learn_more.md", "r") as f:
+    howto_md = f.read()
+
+modal_overlay = dbc.Modal(
+    [
+        dbc.ModalBody(html.Div([dcc.Markdown(howto_md)], id="howto-md")),
+        dbc.ModalFooter(dbc.Button("Close", id="howto-close", className="howto-bn")),
+    ],
+    id="modal",
+    size="lg",
+)
+
+button_howto = dbc.Button(
+    "Learn more",
+    id="howto-open",
+    outline=True,
+    color="info",
+    # Turn off lowercase transformation for class .button in stylesheet
+    style={"textTransform": "none"},
+)
+
+button_github = dbc.Button(
+    "View Code on github",
+    outline=True,
+    color="primary",
+    href="https://github.com/quantgirluk",
+    id="gh-link",
+    style={"text-transform": "none"},
+)
+
+# Header
+header = dbc.Navbar(
+    dbc.Container(
+        [
+            dbc.Row(
+                [
+                    dbc.Col(
+                        # html.Img(
+                        #     id="logo",
+                        #     src=app.get_asset_url("dash-logo-new.png"),
+                        #     height="30px",
+                        # ),
+                        # md="auto",
+                    ),
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    html.H4("Yield Curves Visualisation"),
+                                    html.P("By Dialid Santiago"),
+                                ],
+                                id="app-title",
+                            )
+                        ],
+                          md="auto",
+#                         md=True,
+                        align="center",
+                    ),
+                ],
+                align="center",
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            dbc.NavbarToggler(id="navbar-toggler"),
+                            dbc.Collapse(
+                                dbc.Nav(
+                                    [
+                                        dbc.NavItem(button_howto),
+                                        dbc.NavItem(button_github),
+                                    ],
+                                    navbar=True,
+                                ),
+                                id="navbar-collapse",
+                                navbar=True,
+                            ),
+                            modal_overlay,
+                        ],
+                        # md=2,
+                    ),
+                ],
+                align="center",
+            ),
+        ],
+        fluid=True,
+    ),
+    dark=False,
+    # color="dark",
+    sticky="top",
+)
+
+
+# Description
+description = dbc.Col(
+    [
+        dbc.Card(
+            id="description-card",
+            children=[
+                dbc.CardHeader("Explanation"),
+                dbc.CardBody(
+                    [
+                        dbc.Row(
+                            [
+                                dbc.Col(
+                                    [
+                                        html.Img(
+                                            src="assets/segmentation_img_example_marks.jpg",
+                                            width="200px",
+                                        )
+                                    ],
+                                    md="auto",
+                                ),
+                                dbc.Col(
+                                    html.P(
+                                        "This is an example of interactive machine learning for image classification. "
+                                        "To train the classifier, draw some marks on the picture using different colors for "
+                                        'different parts, like in the example image. Then enable "Show segmentation" to see the '
+                                        "classes a Random Forest Classifier gave to regions of the image, based on the marks you "
+                                        "used as a guide. You may add more marks to clarify parts of the image where the "
+                                        "classifier was not successful and the classification will update."
+                                    ),
+                                    md=True,
+                                ),
+                            ]
+                        ),
+                    ]
+                ),
+            ],
+        )
+    ],
+    md=12,
+)
+
+
 app.layout = html.Div(children=[
-    dbc.Row(title),
+
+    header,
+
+    # dbc.Row(title),
+
+    # dbc.Row(description),
 
     # dbc.Row(
     #     dbc.Container([
@@ -96,8 +238,6 @@ app.layout = html.Div(children=[
         class_name="dbc"
     ),
 
-
-
     dbc.Container(
         dbc.Row([html.Div(id='about-me',
                           children=[
@@ -105,11 +245,13 @@ app.layout = html.Div(children=[
                                             ---                                                                      
                                             ### About Me
                                             
-                                            I have 8 years of experience working as a Quant. Currently, I am working in the Cross-Asset front office quant team at Bank of America. My previous experience includes the development and implementation of mathematical models for Counterparty Credit Risk, Market Risk, and Wholesale Credit Risk, as well as Validation in Retail Credit Risk. 
+                                            Hello, my name is Dialid. I am a Mathematician and a Finance Quantitative Analyst based in London. I create open source projects and write about financial mathematics, programming, statistics, data visualisation, and related topics.
+                                            
+                                            I have over 8 years of experience working as a Quant. Currently, I am working in the Cross-Asset front office quant team at Bank of America. My previous experience includes the development and implementation of mathematical models for Counterparty Credit Risk, Market Risk, and Wholesale Credit Risk, as well as Validation in Retail Credit Risk. 
                                             
                                             I hold a PhD in Mathematics/Statistics from the University of Warwick where I spent 4 amazing years focusing on non-linear stochastic processes. Before coming to the UK, I obtained an MSc in Probability and Statistics, and a BSc in Applied Mathematics in Mexico. 
                                             
-                                            I regularly write [here](https://quantgirl.blog) about diverse topics.
+                                            I regularly write about diverse topics [here](https://quantgirl.blog).
                                             
                                             Connect with me via:
                                             
@@ -128,7 +270,7 @@ app.layout = html.Div(children=[
         style={
             # "margin-left": "3rem",
             # "margin-right": "3rem",
-            "width": "85%",
+            "width": "70%",
             # "padding": "2rem 2rem 2rem 2rem",
         },
         class_name="dbc"
@@ -136,6 +278,18 @@ app.layout = html.Div(children=[
 ])
 
 # app.layout = layout
+
+
+# Callback for modal popup
+@app.callback(
+    Output("modal", "is_open"),
+    [Input("howto-open", "n_clicks"), Input("howto-close", "n_clicks")],
+    [State("modal", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
 
 ####################################
 # RUN the app
