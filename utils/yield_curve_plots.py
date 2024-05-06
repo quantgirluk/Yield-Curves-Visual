@@ -145,22 +145,20 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                   labels={'Color': '', 'Maturity': 'Maturity', 'Yield': 'Yield'},
                   color=id_vars,
                   color_discrete_sequence=['cornflowerblue'],
-                  # color_discrete_map={dt: 'cornflowerblue' for dt in tabular_df.id_vars},
                   animation_frame=id_vars,
                   animation_group='Maturity',
                   range_y=[int(min_yield), int(max_yield) + 2],
                   markers='*',
                   hover_data={'Maturity': True, 'Yield': True, id_vars: True, 'Color': False},
-                  # text=tabular_df.Yield,
                   )
 
     latest_curve = df_rev.iloc[-1, :]
     fig.add_trace(go.Scatter(x=latest_curve.index, y=latest_curve.values,
-                             name="Present",
+                             name="Apr-2024",
                              ))
 
     fig.update_layout(title='An Animation of The Yield Curve over Time <br> '
-                            '<span style="font-size: 12px;">From January 1990 to May 2024</span>',
+                            '<span style="font-size: 12px;">From January 1990 to April 2024</span>',
                       title_font=dict(size=18),
                       title_x=0.5,
                       autosize=True,
@@ -247,18 +245,17 @@ def plot_line_spread(df, idx, low, high, source_text):
                   y='Spread',
                   hover_data={'Spread': True},
                   )
-    fig.add_trace(go.Scatter(x=data.index, y=data['Spread_above'], fill='tozeroy', mode='none'))
-    fig.add_trace(go.Scatter(x=data.index, y=data['Spread_below'], fill='tozeroy', mode='none'))
+    fig.add_trace(go.Scatter(x=data.index, y=data['Spread_above'], fill='tozeroy', mode='none', name="Inverted"))
+    fig.add_trace(go.Scatter(x=data.index, y=data['Spread_below'], fill='tozeroy', mode='none', name="Normal"))
     fig.update_xaxes(title=None)
 
     fig.update_layout(title=f'A Visualisation of the Yield Spread<br><span style="font-size: 12px;"> '
-                            f'Difference between the {high} and the {low} yields (%)<span>',
+                            f'Difference (%) between the {high} and the {low} Yields<span>',
                       title_font=dict(size=18),
                       title_x=0.5,
-                      # title_font=dict(size=20),
                       autosize=True,
                       # width=1000,
-                      height=600,
+                      height=550,
                       margin=dict(t=60, b=90, l=20, r=20),
                       annotations=[dict(text=source_text, x=0, y=-0.15, xref="paper",
                                         yref="paper",
