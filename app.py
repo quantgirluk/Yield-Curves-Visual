@@ -11,7 +11,7 @@ dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates@V1.0.2
 app = dash.Dash(__name__,
                 external_stylesheets=[dbc.themes.SPACELAB, dbc_css],
                 meta_tags=[{'name': 'viewport',
-                            'content': 'width=device-width,initial-scale=0.8'}],
+                            'content': 'width=device-width,initial-scale=1.0'}],
                 use_pages=True,
                 )
 server = app.server
@@ -110,7 +110,7 @@ header = dbc.Navbar(
     ),
     dark=False,
     # color="dark",
-    sticky="top",
+    # sticky="top",
 )
 
 # Description
@@ -136,10 +136,14 @@ description = dbc.Col(
                                 dbc.Col(
                                     html.P(
                                         "This is an example of interactive machine learning for image classification. "
-                                        "To train the classifier, draw some marks on the picture using different colors for "
-                                        'different parts, like in the example image. Then enable "Show segmentation" to see the '
-                                        "classes a Random Forest Classifier gave to regions of the image, based on the marks you "
-                                        "used as a guide. You may add more marks to clarify parts of the image where the "
+                                        "To train the classifier, draw some marks on the picture using different "
+                                        "colors for "
+                                        'different parts, like in the example image. Then enable "Show segmentation" '
+                                        'to see the '
+                                        "classes a Random Forest Classifier gave to regions of the image, based on the "
+                                        "marks you "
+                                        "used as a guide. You may add more marks to clarify parts of the image where "
+                                        "the "
                                         "classifier was not successful and the classification will update."
                                     ),
                                     md=True,
@@ -157,22 +161,6 @@ description = dbc.Col(
 app.layout = html.Div(children=[
 
     header,
-
-    # dbc.Row(title),
-
-    # dbc.Row(description),
-
-    # dbc.Row(
-    #     dbc.Container([
-    #         dbc.Row(
-    #             [
-    #                 html.H1("test")
-    #             ], justify="center", align="center", className="h-50"
-    #         )
-    #     ], style={"height": "100vh"}
-    #
-    #     )
-    # ),
 
     dbc.Container(
         dbc.Row([html.Div(id='yield-curve-101',
@@ -210,26 +198,6 @@ app.layout = html.Div(children=[
         class_name="dbc"
     ),
 
-    # dbc.Container(
-    #     dbc.Row([html.Div(id='text-container',
-    #                       children=[dcc.Markdown('''
-    #               The yield curve shows how much it costs the federal
-    #               government to borrow money
-    #               for a given amount of time, revealing the relationship between long- and short-term
-    #               interest rates. It is, inherently, a forecast for what the economy holds in the
-    #               future — how much inflation there will be, for example, and how healthy growth will
-    #               be over the years ahead — all embodied in the price of money today, tomorrow and
-    #               many years from now.
-    #               ''')
-    #                                 ],
-    #                       className='text-justify mt-4 mb-4', style={'fontSize': 15})
-    #              ]),
-    #
-    #     fluid=True,
-    #     style=CONTENT_INTRO,
-    #     class_name="dbc"
-    # ),
-
     dbc.Row([html.Div(id='button',
                       children=[dbc.Button(page['name'],
                                            href=page['path'],
@@ -240,7 +208,7 @@ app.layout = html.Div(children=[
                                 ],
                       className='text-center mt-4 mb-4', style={'fontSize': 10})
              ]),
-    # Content page
+
     dbc.Spinner(
         dash.page_container,
         fullscreen=True,
@@ -254,7 +222,8 @@ app.layout = html.Div(children=[
     dbc.Container(
         dbc.Row([html.Div(id='text-container1',
                           children=[dcc.Markdown('''
-              If you like this project, please give it a star in [GitHub](https://github.com/quantgirluk/Yield-Curves-Visual) ⭐️
+              If you like this project, please give it a star
+               in [GitHub](https://github.com/quantgirluk/Yield-Curves-Visual) ⭐️
               ''')
                                     ],
                           className='text-center mt-4', style={'fontSize': 15})
@@ -272,11 +241,21 @@ app.layout = html.Div(children=[
                                             ---                                                                      
                                             ### About Me
                                             
-                                            Hello, my name is [Dialid](https://quantgirl.blog/about-me/). I am a Mathematician and a Finance Quantitative Analyst based in London. I create open source projects and write about financial mathematics, programming, statistics, data visualisation, and related topics.
+                                            Hello, my name is [Dialid](https://quantgirl.blog/about-me/). I am a 
+                                            Mathematician and a Finance Quantitative Analyst based in London. I create 
+                                            open source projects and write about financial mathematics, programming, 
+                                            statistics, data visualisation, and related topics.
                                             
-                                            I have over 8 years of experience working as a Quant. Currently, I am working in the Cross-Asset front office quant team at Bank of America. My previous experience includes the development and implementation of mathematical models for Counterparty Credit Risk, Market Risk, and Wholesale Credit Risk, as well as Validation in Retail Credit Risk. 
+                                            I have over 8 years of experience working as a Quant. Currently, I am 
+                                            working in the Cross-Asset front office quant team at Bank of America. 
+                                            My previous experience includes the development and implementation of 
+                                            mathematical models for Counterparty Credit Risk, Market Risk, and Wholesale 
+                                            Credit Risk, as well as Validation in Retail Credit Risk. 
                                             
-                                            I hold a PhD in Mathematics/Statistics from the University of Warwick where I spent 4 amazing years focusing on non-linear stochastic processes. Before coming to the UK, I obtained an MSc in Probability and Statistics, and a BSc in Applied Mathematics in Mexico. 
+                                            I hold a PhD in Mathematics/Statistics from the University of Warwick where 
+                                            I spent 4 amazing years focusing on non-linear stochastic processes. 
+                                            Before coming to the UK, I obtained an MSc in Probability and Statistics, 
+                                            and a BSc in Applied Mathematics in Mexico. 
                                             
                                             I regularly write about diverse topics [here](https://quantgirl.blog).
                                             
@@ -317,10 +296,9 @@ def toggle_modal(n1, n2, is_open):
     return is_open
 
 
-
 if __name__ == '__main__':
     server = app.server
 app.run_server(debug=True,
-               host='0.0.0.0',
-               port=10000
+               # host='0.0.0.0',
+               # port=10000
                )

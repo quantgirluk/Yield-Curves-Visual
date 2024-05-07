@@ -232,9 +232,10 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
     #     if (not trace['name'] in ['Present']):
     #         trace['showlegend'] = False
     # fig.frames[k]['layout'].update(title_text=f'An Animation of The Yield Curve over '
-    #                                           f'Time<br><span style="font-size: 12px;">From 1991 to Today  -as of {date}</span>')
+    #                                           f'Time<br><span style="font-size: 12px;">From
+    #                                           1991 to Today  -as of {date}</span>')
 
-    # Auto-play animation
+    # Autoplay animation
     # plotly.offline.plot(fig, auto_play = True)
     return fig
 
