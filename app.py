@@ -5,7 +5,7 @@ from dash import html
 from dash.dependencies import Input, Output, State
 from dash_bootstrap_templates import load_figure_template
 
-from utils.styles import CONTENT_INTRO
+from utils.styles import CONTENT_INTRO, CONTENT_STYLE
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates@V1.0.2/dbc.min.css"
 app = dash.Dash(__name__,
@@ -158,14 +158,12 @@ description = dbc.Col(
     md=12,
 )
 
-app.layout = html.Div(children=[
+app.layout = html.Div(children=[header,
 
-    header,
-
-    dbc.Container(
-        dbc.Row([html.Div(id='yield-curve-101',
-                          children=[
-                              dcc.Markdown('''            
+                                dbc.Container(
+                                    dbc.Row([html.Div(id='yield-curve-101',
+                                                      children=[
+                                                          dcc.Markdown('''            
                   --- 
                                                                                                              
                   **Yield Curve 101**  
@@ -184,60 +182,56 @@ app.layout = html.Div(children=[
                   
                   --- 
                 ''')
-                          ],
-                          className='text-justify mt-4', style={'fontSize': 15})
-                 ]),
+                                                      ],
+                                                      className='text-justify mt-4', style={'fontSize': 15})
+                                             ]),
+                                    fluid=True,
+                                    style=CONTENT_INTRO,
+                                    class_name="dbc"
+                                ),
 
-        fluid=True,
-        style={
-            # "margin-left": "3rem",
-            # "margin-right": "3rem",
-            "width": "70%",
-            # "padding": "2rem 2rem 2rem 2rem",
-        },
-        class_name="dbc"
-    ),
+                                dbc.Row([html.Div(id='button',
+                                                  children=[dbc.Button(page['name'],
+                                                                       href=page['path'],
+                                                                       outline=True,
+                                                                       color='dark',
+                                                                       className="me-1")
+                                                            for page in dash.page_registry.values()
+                                                            ],
+                                                  className='text-center mt-4 mb-4', style={'fontSize': 10})
+                                         ]),
 
-    dbc.Row([html.Div(id='button',
-                      children=[dbc.Button(page['name'],
-                                           href=page['path'],
-                                           outline=True,
-                                           color='dark',
-                                           className="me-1")
-                                for page in dash.page_registry.values()
-                                ],
-                      className='text-center mt-4 mb-4', style={'fontSize': 10})
-             ]),
 
-    dbc.Spinner(
-        dash.page_container,
-        fullscreen=True,
-        show_initially=True,
-        delay_hide=600,
-        type='grow',
-        spinner_style={"width": "3rem", "height": "3rem"}),
+                                dbc.Spinner(
+                                    dash.page_container,
+                                    fullscreen=True,
+                                    show_initially=True,
+                                    delay_hide=600,
+                                    type='grow',
+                                    spinner_style={"width": "3rem", "height": "3rem"}),
 
-    html.Br(),
 
-    dbc.Container(
-        dbc.Row([html.Div(id='text-container1',
-                          children=[dcc.Markdown('''
+                                html.Br(),
+
+                                dbc.Container(
+                                    dbc.Row([html.Div(id='text-container1',
+                                                      children=[dcc.Markdown('''
               If you like this project, please give it a star
                in [GitHub](https://github.com/quantgirluk/Yield-Curves-Visual) ⭐️
               ''')
-                                    ],
-                          className='text-center mt-4', style={'fontSize': 15})
-                 ]),
+                                                                ],
+                                                      className='text-center mt-4', style={'fontSize': 15})
+                                             ]),
 
-        fluid=True,
-        style=CONTENT_INTRO,
-        class_name="dbc"
-    ),
+                                    fluid=True,
+                                    style=CONTENT_INTRO,
+                                    class_name="dbc"
+                                ),
 
-    dbc.Container(
-        dbc.Row([html.Div(id='about-me',
-                          children=[
-                              dcc.Markdown('''
+                                dbc.Container(
+                                    dbc.Row([html.Div(id='about-me',
+                                                      children=[
+                                                          dcc.Markdown('''
                                             ---                                                                      
                                             ### About Me
                                             
@@ -268,20 +262,15 @@ app.layout = html.Div(children=[
                                             
                                             Thanks for visiting ✨
                                                           ''')
-                          ],
-                          className='text-justify mt-4 mb-4', style={'fontSize': 15})
-                 ]),
+                                                      ],
+                                                      className='text-justify mt-4 mb-4', style={'fontSize': 15})
+                                             ]),
 
-        fluid=True,
-        style={
-            # "margin-left": "3rem",
-            # "margin-right": "3rem",
-            "width": "70%",
-            # "padding": "2rem 2rem 2rem 2rem",
-        },
-        class_name="dbc"
-    ),
-])
+                                    fluid=True,
+                                    style=CONTENT_INTRO,
+                                    class_name="dbc"
+                                ),
+                                ])
 
 
 # Callback for modal popup
@@ -299,6 +288,6 @@ def toggle_modal(n1, n2, is_open):
 if __name__ == '__main__':
     server = app.server
 app.run_server(debug=True,
-               host='0.0.0.0',
-               port=10000
+               # host='0.0.0.0',
+               # port=10000
                )
