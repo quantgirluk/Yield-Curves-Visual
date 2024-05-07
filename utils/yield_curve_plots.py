@@ -51,16 +51,16 @@ def plot_yield_curve_surface(df, source_text):
         title_font=dict(size=22),
         title_x=0.5,
         autosize=True,
-        # width=1800,
+        # width=1400,
         height=900,
 
         hovermode='closest',
         scene={
             'aspectratio': {"x": 1, "y": 1.75, "z": 0.75},
             'camera': {
-                'up': {'x': 0, 'y': 0, 'z': 1.0},
+                # 'up': {'x': 0, 'y': 0, 'z': 1.0},
                 'eye': {'x': 1.0 * radius, 'y': 0.95 * radius, 'z': 0.15 * radius},
-                'center': {'x': 0.0, 'y': 0.0, 'z': -0.25},
+                # 'center': {'x': 0., 'y': 0.5, 'z': -0.25},
             },
             'xaxis': {'zeroline': False, "showspikes": False, "showline": True},
             'yaxis': {'zeroline': False, "showspikes": False, "showline": True},
@@ -69,7 +69,7 @@ def plot_yield_curve_surface(df, source_text):
             'yaxis_title': '',
             'zaxis_title': ''
         },
-        margin=dict(l=40, r=40, b=10, t=40),
+        margin=dict(l=0, r=0, b=10, t=40),
         annotations=[
             dict(
                 text=source_text,
