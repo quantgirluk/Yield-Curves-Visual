@@ -287,7 +287,7 @@ def toggle_modal(n1, n2, is_open):
 
 if __name__ == '__main__':
     server = app.server
-app.run_server(debug=True,
+app.run_server(debug=False,
                host='0.0.0.0',
                port=10000
                )
