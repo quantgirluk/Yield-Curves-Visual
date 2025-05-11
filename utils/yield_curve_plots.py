@@ -154,11 +154,11 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
 
     latest_curve = df_rev.iloc[-1, :]
     fig.add_trace(go.Scatter(x=latest_curve.index, y=latest_curve.values,
-                             name="Apr-2024",
+                             name="Latest",
                              ))
 
     fig.update_layout(title='An Animation of The Yield Curve over Time <br> '
-                            '<span style="font-size: 12px;">From January 1990 to April 2024</span>',
+                            '<span style="font-size: 12px;">From January 1990</span>',
                       title_font=dict(size=18),
                       title_x=0.5,
                       autosize=True,
