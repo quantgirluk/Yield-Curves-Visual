@@ -2,8 +2,7 @@ import pandas as pd
 import pandas_datareader as pdr
 
 
-def retrieve_us_yield_curve_data():
-    start = '1990-01-01'
+def retrieve_us_yield_curve_data(start='1990-01-01'):
     tickers = ['GS30', 'GS10', 'GS5', 'GS3', 'GS2', 'GS1', 'GS6m', 'GS3m', 'GS1m']
     df = pdr.get_data_fred(tickers, start)
     df.columns = ['30-year', '10-year', '5-year', '3-year', '2-year', '1-year', '6-month', '3-month', '1-month']
@@ -26,3 +25,6 @@ def get_uk_yield_curve_data():
     df.index = pd.to_datetime(df.index)
 
     return df
+
+# if __name__ == '__main__':
+#     retrieve_us_yield_curve_data(start='2000-01-01')
