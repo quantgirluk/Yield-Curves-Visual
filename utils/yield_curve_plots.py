@@ -98,8 +98,8 @@ def plot_heatmap(df, source_text):
                                      zmin=-3,
                                      showscale=True,
                                      reversescale=True,
-                                     hovertemplate='<br>Date: %{x}' + \
-                                                   '<br>Maturity: %{y}' + \
+                                     hovertemplate='<br>Date: %{x}' +
+                                                   '<br>Maturity: %{y}' +
                                                    '<br>Yield: %{z:.2f}<extra></extra>',
                                      )])
 
@@ -135,6 +135,8 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                          value_name='Yield')
     tabular_df['Color'] = ['blue'] * len(tabular_df)
     tabular_df[id_vars] = tabular_df[id_vars].dt.strftime('%b-%Y')
+    first_date = tabular_df[id_vars].iloc[0]
+    last_date = tabular_df[id_vars].iloc[-1]
     max_yield = tabular_df.Yield.max()
     min_yield = tabular_df.Yield.min()
 
@@ -154,11 +156,11 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
 
     latest_curve = df_rev.iloc[-1, :]
     fig.add_trace(go.Scatter(x=latest_curve.index, y=latest_curve.values,
-                             name="Latest",
+                             name=f"{last_date}",
                              ))
 
     fig.update_layout(title='An Animation of The Yield Curve over Time <br> '
-                            '<span style="font-size: 12px;">From January 1990</span>',
+                            f'<span style="font-size: 12px;">{first_date} to {last_date}</span>',
                       title_font=dict(size=18),
                       title_x=0.5,
                       autosize=True,
@@ -192,12 +194,6 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                           # )
                       ]
                       )
-    # fig.update_layout(showlegend=False)
-
-    # for trace in fig['data']:
-    #     if (not trace['name'] in ['Present']):
-    #         trace['showlegend'] = False
-
     for step in fig.layout.sliders[0].steps:
         step["args"][1]["frame"]["redraw"] = True
 

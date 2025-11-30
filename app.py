@@ -5,7 +5,7 @@ from dash import html
 from dash.dependencies import Input, Output, State
 from dash_bootstrap_templates import load_figure_template
 
-from utils.styles import CONTENT_INTRO, CONTENT_STYLE
+from utils.styles import CONTENT_INTRO
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates@V1.0.2/dbc.min.css"
 app = dash.Dash(__name__,
@@ -201,7 +201,6 @@ app.layout = html.Div(children=[header,
                                                   className='text-center mt-4 mb-4', style={'fontSize': 10})
                                          ]),
 
-
                                 dbc.Spinner(
                                     dash.page_container,
                                     fullscreen=True,
@@ -209,7 +208,6 @@ app.layout = html.Div(children=[header,
                                     delay_hide=600,
                                     type='grow',
                                     spinner_style={"width": "3rem", "height": "3rem"}),
-
 
                                 html.Br(),
 
@@ -287,7 +285,6 @@ def toggle_modal(n1, n2, is_open):
 
 if __name__ == '__main__':
     server = app.server
-app.run_server(debug=False,
-               host='0.0.0.0',
-               port=10000
-               )
+app.run(debug=False,
+        host='0.0.0.0',
+        port=10000)
