@@ -229,7 +229,7 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                       title_font=dict(size=18),
                       title_x=0.5,
                       # autosize=True,
-                      width=800,
+                      # width=800,
                       height=700,
                       margin=dict(t=70, b=90, l=50, r=50),
                       legend_title="",
