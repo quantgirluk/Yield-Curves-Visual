@@ -128,13 +128,78 @@ def plot_heatmap(df, source_text):
     return fig
 
 
-def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
+def tenor_to_years(tenor: str) -> float:
+    """
+    Convert a tenor string like '40Y', '6M', '1.5Y' into a float in years.
+    Supports:
+        - Years: 'Y' (e.g., '40Y' -> 40.0)
+        - Months: 'M' (e.g., '6M' -> 0.5)
+    """
+    tenor = tenor.strip().upper()
+
+    if tenor.endswith("Y"):  # Years
+        return float(tenor[:-1])
+
+    elif tenor.endswith("M"):  # Months
+        return float(tenor[:-1]) / 12
+
+    else:
+        raise ValueError(f"Invalid tenor format: {tenor}")
+
+
+def tenor_to_years_vectorized(tenor_series: pd.Series) -> pd.Series:
+    """
+    Vectorized conversion of a pandas Series of tenor strings to float years.
+    Supports:
+      - '40Y', '39.5Y', '6M'
+      - '30-year', '6-month'
+    """
+    # Convert to lowercase and remove spaces/underscores
+    s = tenor_series.str.lower().str.replace(r"[ _]", "", regex=True)
+
+    # Initialize result as NaN
+    result = pd.Series(np.nan, index=s.index, dtype=float)
+
+    # Year formats
+    mask_year = s.str.contains("year") | s.str.endswith("y")
+    result[mask_year] = (
+        s[mask_year]
+        .str.replace("-year", "", regex=False)
+        .str.replace("year", "", regex=False)
+        .str.replace("y", "", regex=False)
+        .astype(float)
+    )
+
+    # Month formats
+    mask_month = s.str.contains("month") | s.str.endswith("m")
+    result[mask_month] = (
+        s[mask_month]
+        .str.replace("-month", "", regex=False)
+        .str.replace("month", "", regex=False)
+        .str.replace("m", "", regex=False)
+        .astype(float) / 12
+    )
+
+    return result
+
+
+def prepare_data_for_historical_yield_curve(df, id_vars='DATE'):
     df_rev = df.iloc[:, ::-1]
 
     tabular_df = pd.melt(df_rev.reset_index(), id_vars=id_vars, value_vars=df_rev.columns, var_name='Maturity',
                          value_name='Yield')
     tabular_df['Color'] = ['blue'] * len(tabular_df)
+
+    tabular_df["Maturity"] = tenor_to_years_vectorized(tabular_df["Maturity"])
+
     tabular_df[id_vars] = tabular_df[id_vars].dt.strftime('%b-%Y')
+
+    return tabular_df
+
+
+def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
+    tabular_df = prepare_data_for_historical_yield_curve(df, id_vars)
+
     first_date = tabular_df[id_vars].iloc[0]
     last_date = tabular_df[id_vars].iloc[-1]
     max_yield = tabular_df.Yield.max()
@@ -154,8 +219,8 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                   hover_data={'Maturity': True, 'Yield': True, id_vars: True, 'Color': False},
                   )
 
-    latest_curve = df_rev.iloc[-1, :]
-    fig.add_trace(go.Scatter(x=latest_curve.index, y=latest_curve.values,
+    latest_curve = tabular_df[tabular_df[id_vars] == last_date]
+    fig.add_trace(go.Scatter(x=latest_curve.Maturity, y=latest_curve.Yield,
                              name=f"{last_date}",
                              ))
 
@@ -163,10 +228,10 @@ def plot_historical_yield_curve(df, source_text, id_vars='DATE'):
                             f'<span style="font-size: 12px;">{first_date} to {last_date}</span>',
                       title_font=dict(size=18),
                       title_x=0.5,
-                      autosize=True,
-                      # width=900,
-                      height=600,
-                      margin=dict(t=70, b=90, l=20, r=20),
+                      # autosize=True,
+                      width=800,
+                      height=700,
+                      margin=dict(t=70, b=90, l=50, r=50),
                       legend_title="",
                       legend=dict(
                           yanchor="top",

@@ -8,7 +8,7 @@ dash.register_page(__name__, path='/', name='U.S. Treasuries Yield Curve')
 df = ds.get_us_yield_curve_data()
 source = "Data Source: FRED - Federal Reserve Economic Data"
 id_vars = 'DATE'
-low = '2-year'
+low = '3-month'
 high = '10-year'
 
 load_figure_template("lux")
